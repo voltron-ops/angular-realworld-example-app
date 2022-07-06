@@ -54,5 +54,5 @@
   },
   "publishConfig": {
    "registry": "http://172.17.0.3:8081/repository/npm-group/"
-}
+  }
 }
