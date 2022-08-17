@@ -1,5 +1,6 @@
 import groovy.json.*
-    
+def allowed_branches = [ "QA" : ["test-qa"]  ]  
+
 def extractAndUpdateVersion(fromFile, toFile){
     def json = readFile(file: "${fromFile}")
     def parsedJson = new JsonSlurperClassic().parseText(json)
@@ -23,6 +24,17 @@ node{
     stage("Clean Workspace"){
         cleanWs()
     }
+    stage('Initialize'){
+      def gitRepo = checkout scm
+      git_branch = gitRepo.GIT_BRANCH.tokenize('/')[-1]
+      String git_short_commit_id = gitRepo.GIT_COMMIT[0..6]
+      println("git_short_commit_id : "+git_short_commit_id)
+      def branch_list = allowed_branches[params.env]
+      if (! branch_list.isEmpty() &&  !(git_branch in branch_list)) {
+          error "Selected '${git_branch}' branch, is not allowed to be deployed on '${params.env}' environment."
+      }
+      echo "Deploying '${git_branch}' branch on ${params.env} environment."
+  }
     stage("Checkout SCM"){
         git branch: 'test-qa', url: 'https://github.com/voltron-ops/angular-realworld-example-app.git'
     }
