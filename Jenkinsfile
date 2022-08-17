@@ -37,7 +37,7 @@ node{
         bat "git add app_version-dev.json"
         bat "git commit -m \"Version updated after successfull build\""
         bat "git tag ${newVersion}-testqa"
-        withCredentials([usernamePassword(credentialsId: 'GithubCreds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        withCredentials([usernamePassword(credentialsId: 'gitCreds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             bat "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/voltron-ops/angular-realworld-example-app.git HEAD:test-qa"
             bat "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/voltron-ops/angular-realworld-example-app.git --tags"
         }
