@@ -39,7 +39,7 @@ node{
         bat "git tag ${newVersion}-testqa"
         withCredentials([usernamePassword(credentialsId: 'gitCreds', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             bat 'git push https://"${GIT_USERNAME}":"${GIT_PASSWORD}"@github.com/voltron-ops/angular-realworld-example-app.git HEAD:test-qa'
-            bat 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/voltron-ops/angular-realworld-example-app.git --tags'
+            bat 'git push https://"${GIT_USERNAME}":"${GIT_PASSWORD}"@github.com/voltron-ops/angular-realworld-example-app.git --tags'
         }
     }
 }
