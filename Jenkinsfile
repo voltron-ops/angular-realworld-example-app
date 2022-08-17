@@ -24,7 +24,7 @@ node{
         cleanWs()
     }
     stage("Checkout SCM"){
-        checkout scm
+        git branch: 'test-qa', url: 'https://github.com/voltron-ops/angular-realworld-example-app.git'
     }
     stage("UpdateVersion"){
         extractAndUpdateVersion("package.json", "app_version-dev.json" )
